@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk — Apis AI</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="apisGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4C6FFF"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="auth-page">
+  <div class="hive-texture"></div>
+
+  <div class="auth-card fade-in">
+    <div class="apis-logo">
+      <svg viewBox="0 0 24 24"><polygon class="hex-fill" points="12,2 21,7 21,17 12,22 3,17 3,7"/></svg>
+    </div>
+    <h1>Selamat Datang di Apis AI</h1>
+    <p class="auth-tag">Masuk untuk melanjutkan percakapan cerdasmu</p>
+
+    <form class="auth-form" id="login-form" novalidate>
+      <div class="field" id="field-email">
+        <label for="login-email">Email</label>
+        <div class="input-wrap">
+          <input type="email" id="login-email" placeholder="nama@email.com" autocomplete="email">
+        </div>
+        <div class="field-error">Email tidak valid.</div>
+      </div>
+
+      <div class="field" id="field-password">
+        <label for="login-password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="login-password" placeholder="Masukkan password" autocomplete="current-password">
+          <button type="button" class="toggle-eye" aria-label="Tampilkan password">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="field-error">Password salah.</div>
+      </div>
+
+      <div class="row-between mt-8" style="margin-bottom:20px;">
+        <label class="check-row">
+          <input type="checkbox" id="remember-me" checked> Ingat saya
+        </label>
+        <a href="#" class="link-accent" id="forgot-password-link">Lupa password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block ripple">Masuk</button>
+
+      <div class="auth-divider">atau</div>
+
+      <button type="button" class="btn btn-secondary btn-block btn-google ripple" id="google-login-btn">
+        <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.2 5.1 29.4 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.5-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.2 5.1 29.4 3 24 3c-7.4 0-13.8 4.2-17 10.3z"/><path fill="#4CAF50" d="M24 45c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.3 36 26.8 37 24 37c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.9 40.6 16.4 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.3 5.7l6.3 5.3C40.5 36.4 45 30.8 45 24c0-1.4-.1-2.5-1.4-3.5z"/></svg>
+        Masuk dengan Google
+      </button>
+    </form>
+
+    <p class="auth-footer">Belum punya akun? <a href="register.html" class="link-accent">Buat Akun</a></p>
+  </div>
+</div>
+
+<!-- Forgot password modal -->
+<div class="overlay" id="forgot-overlay" aria-hidden="true">
+  <div class="modal">
+    <h3>Reset Password</h3>
+    <p>Masukkan email akunmu, kami akan mengirimkan tautan untuk mengatur ulang password.</p>
+    <form id="forgot-form">
+      <div class="field" style="margin-bottom:0;">
+        <div class="input-wrap"><input type="email" placeholder="nama@email.com" required></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary ripple" data-close-overlay>Batal</button>
+        <button type="submit" class="btn btn-primary ripple">Kirim Tautan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/ui-helpers.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  document.querySelectorAll('[data-close-overlay]').forEach(btn => {
+    btn.addEventListener('click', () => closeOverlay(btn.closest('.overlay')));
+  });
+</script>
+</body>
+</html>
