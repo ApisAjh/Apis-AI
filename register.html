@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buat Akun — Apis AI</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="apisGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4C6FFF"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="auth-page">
+  <div class="hive-texture"></div>
+
+  <div class="auth-card fade-in">
+    <div class="apis-logo">
+      <svg viewBox="0 0 24 24"><polygon class="hex-fill" points="12,2 21,7 21,17 12,22 3,17 3,7"/></svg>
+    </div>
+    <h1>Buat Akun Apis AI</h1>
+    <p class="auth-tag">Mulai percakapan cerdas pertamamu hari ini</p>
+
+    <form class="auth-form" id="register-form" novalidate>
+      <div class="field" id="field-name">
+        <label for="reg-name">Nama</label>
+        <div class="input-wrap"><input type="text" id="reg-name" placeholder="Nama lengkap" autocomplete="name"></div>
+        <div class="field-error"></div>
+      </div>
+
+      <div class="field" id="field-username">
+        <label for="reg-username">Username</label>
+        <div class="input-wrap"><input type="text" id="reg-username" placeholder="username_unik" autocomplete="username"></div>
+        <div class="field-error"></div>
+      </div>
+
+      <div class="field" id="field-reg-email">
+        <label for="reg-email">Email</label>
+        <div class="input-wrap"><input type="email" id="reg-email" placeholder="nama@email.com" autocomplete="email"></div>
+        <div class="field-error"></div>
+      </div>
+
+      <div class="field" id="field-reg-password">
+        <label for="reg-password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="reg-password" placeholder="Minimal 6 karakter" autocomplete="new-password">
+          <button type="button" class="toggle-eye" aria-label="Tampilkan password">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="field-error"></div>
+      </div>
+
+      <div class="field" id="field-confirm">
+        <label for="reg-confirm">Konfirmasi Password</label>
+        <div class="input-wrap">
+          <input type="password" id="reg-confirm" placeholder="Ulangi password" autocomplete="new-password">
+          <button type="button" class="toggle-eye" aria-label="Tampilkan password">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="field-error"></div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block ripple mt-8">Buat Akun</button>
+    </form>
+
+    <p class="auth-footer">Sudah punya akun? <a href="login.html" class="link-accent">Masuk</a></p>
+  </div>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/ui-helpers.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
