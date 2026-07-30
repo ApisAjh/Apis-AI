@@ -98,10 +98,21 @@ Create a file:
 .env.local
 ```
 
-Add your Gemini API Key:
+Add your Gemini API configuration:
 
 ```env
-GEMINI_API_KEY=your_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+Example:
+
+```env
+GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxx
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+> Keep your API key private. Never upload `.env.local` to GitHub.
 ```
 
 ---
@@ -113,7 +124,6 @@ Start Vercel development server:
 ```bash
 vercel dev
 ```
-
 Open:
 
 ```text
