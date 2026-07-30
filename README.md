@@ -5,63 +5,77 @@
   Built with HTML, CSS, JavaScript & Vercel Serverless Functions
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-success">
+  <img src="https://img.shields.io/badge/Frontend-HTML%20%7C%20CSS%20%7C%20JavaScript-blue">
+  <img src="https://img.shields.io/badge/Backend-Vercel%20Functions-black">
+  <img src="https://img.shields.io/badge/AI-Google%20Gemini-orange">
+</p>
+
 ---
 
-## 🚀 About APIS AI
+## 🌟 About APIS AI
 
-**APIS AI** is a modern AI chatbot website that uses the **Google Gemini API** as its intelligence engine.
+**APIS AI** is a modern AI chatbot website powered by the **Google Gemini API**.
 
-The project is built with a lightweight frontend and a secure serverless backend using **Vercel Functions**, making it fast, simple, and easy to deploy.
+The project uses a lightweight frontend combined with **Vercel Serverless Functions** as a secure backend layer to communicate with Gemini AI.
+
+APIS AI is designed to provide a fast, responsive, and simple AI assistant experience.
 
 ---
 
 ## ✨ Features
 
 - 💬 AI Chat Assistant
-- 🧠 Powered by Google Gemini API
-- 🖼️ Image understanding support
-- 📱 Responsive design (Mobile & Desktop)
-- ⚡ Fast serverless backend with Vercel
-- 🔒 Secure API Key using Environment Variables
-- 🎨 Modern chatbot interface
+- 🧠 Google Gemini AI Integration
+- 🤖 Gemini Model Support
+- 🖼️ Image Understanding Support
+- 📱 Responsive Design (Mobile & Desktop)
+- ⚡ Fast Serverless Backend
+- 🔒 Secure API Key Management
+- 🎨 Modern Chat Interface
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - HTML5
 - CSS3
 - JavaScript
 
 ### Backend
-- Vercel Serverless Functions
-- Node.js
 
-### AI Model
+- Node.js
+- Vercel Serverless Functions
+
+### AI
+
 - Google Gemini API
+- Gemini 2.5 Flash Model
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```text
 Apis-AI/
 │
 ├── api/
-│   └── chat.js          # Vercel Serverless Backend
+│   └── chat.js              # Gemini API Backend (Vercel Function)
 │
-├── assets/              # Images & Resources
+├── assets/                  # Images & Assets
 │
-├── css/                 # Stylesheet Files
+├── css/                     # Stylesheets
 │
-├── js/                  # Frontend JavaScript
+├── js/                      # Frontend JavaScript
 │
-├── index.html           # Main Interface
+├── index.html               # Main Website
 │
-├── package.json         # Dependencies
+├── package.json             # Project Dependencies
 │
-├── vercel.json          # Vercel Configuration
+├── vercel.json              # Vercel Configuration
 │
 └── README.md
 ```
@@ -76,7 +90,7 @@ Clone this repository:
 git clone https://github.com/ApisAjh/Apis-AI.git
 ```
 
-Go into the project:
+Enter project folder:
 
 ```bash
 cd Apis-AI
@@ -90,7 +104,7 @@ npm install
 
 ---
 
-## 🔑 Environment Setup
+## 🔑 Environment Variables
 
 Create a file:
 
@@ -98,32 +112,32 @@ Create a file:
 .env.local
 ```
 
-Add your Gemini API configuration:
+Add your Gemini configuration:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-3.5-flash
 ```
 
 Example:
 
 ```env
 GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxx
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.5-flash
 ```
 
-> Keep your API key private. Never upload `.env.local` to GitHub.
-```
+⚠️ Never upload your API key to GitHub.
 
 ---
 
 ## ▶️ Run Locally
 
-Start Vercel development server:
+Run the Vercel development server:
 
 ```bash
 vercel dev
 ```
+
 Open:
 
 ```text
@@ -136,25 +150,28 @@ http://localhost:3000
 
 APIS AI is deployed using:
 
-- Vercel Hosting
-- Vercel Serverless Functions
-- Google Gemini API
+- 🚀 Vercel Hosting
+- ⚡ Vercel Serverless Functions
+- 🧠 Google Gemini API
 
-Every update pushed to the main branch will automatically trigger a new deployment.
+Every push to the main branch can automatically trigger a new deployment through Vercel.
 
 ---
 
 ## 📸 Preview
 
-Add your APIS AI screenshots here.
+Add APIS AI screenshots here.
 
 ---
 
 ## 🧑‍💻 Developer
 
-Created by **Apis**
+Created by:
+
+**Apis**
 
 GitHub:
+
 https://github.com/ApisAjh
 
 ---
