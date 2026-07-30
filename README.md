@@ -13,9 +13,9 @@ python3 -m http.server 8000
 
 Di mode ini, balasan AI memakai mesin demo bawaan (`generateAIReply()` di `js/chat.js`) dan data (akun, chat, tema) tersimpan di `localStorage` browser.
 
-## Menyambungkan ke Google Gemini 2.5 Flash (backend sungguhan)
+## Menyambungkan ke Google Gemini 3.5 Flash (backend sungguhan)
 
-Backend memakai SDK resmi **`@google/genai`** dan model **`gemini-2.5-flash`**.
+Backend memakai SDK resmi **`@google/genai`** dan model **`gemini-3.5-flash`**.
 
 1. Buat API key di **https://aistudio.google.com/apikey** (Google AI Studio).
 2. Masuk ke folder backend lalu pasang dependensinya:
