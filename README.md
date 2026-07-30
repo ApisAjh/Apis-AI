@@ -41,8 +41,8 @@ APIS AI is designed to provide a fast, responsive, and simple AI assistant exper
 
 ### Frontend
 
-- HTML5
-- CSS3
+- HTML
+- CSS
 - JavaScript
 
 ### Backend
