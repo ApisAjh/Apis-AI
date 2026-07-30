@@ -16,14 +16,14 @@
    the repo is NOT read in production):
      GEMINI_API_KEY   your key from https://aistudio.google.com/apikey
    Optional:
-     GEMINI_MODEL     defaults to "gemini-2.5-flash"
+     GEMINI_MODEL     defaults to "gemini-3.5-flash"
      ALLOWED_ORIGIN   defaults to "*"
    ========================================================= */
 
 const { GoogleGenAI } = require('@google/genai');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 
 const SYSTEM_PROMPT = `Kamu adalah Apis AI, asisten AI yang ramah, jelas, dan membantu di dalam aplikasi chat bernama "Apis AI" (Development by Apis).
