@@ -179,3 +179,12 @@ https://github.com/ApisAjh
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+Developed by Apis
+
+</div>
+
