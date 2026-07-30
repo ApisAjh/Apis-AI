@@ -1,7 +1,7 @@
 /* =========================================================
    APIS AI — Backend server (server.js)
    ---------------------------------------------------------
-   Migrated from Anthropic Claude to Google Gemini 3.5 Flash
+   Migrated from Anthropic Claude to Google Gemini 3.6 Flash
    using the official @google/genai SDK.
 
    Jobs:
@@ -35,7 +35,7 @@ const { GoogleGenAI } = require('@google/genai');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 
 const SYSTEM_PROMPT = `Kamu adalah Apis AI, asisten AI yang ramah, jelas, dan membantu di dalam aplikasi chat bernama "Apis AI" (Development by Apis).
