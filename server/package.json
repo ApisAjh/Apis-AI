@@ -2,7 +2,7 @@
   "name": "apis-ai-backend",
   "version": "2.0.0",
   "private": true,
-  "description": "Backend proxy for Apis AI — forwards chat messages to Google Gemini 3.5 Flash (via @google/genai) without exposing the API key to the browser.",
+  "description": "Backend proxy for Apis AI — forwards chat messages to Google Gemini 3.6 Flash (via @google/genai) without exposing the API key to the browser.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
