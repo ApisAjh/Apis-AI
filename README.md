@@ -1,61 +1,154 @@
-# Apis AI
+# 🤖 APIS AI
 
-Website AI Assistant modern — lihat `index.html`, `login.html`, `register.html`.
+<p align="center">
+  <b>AI Assistant powered by Google Gemini</b><br>
+  Built with HTML, CSS, JavaScript & Vercel Serverless Functions
+</p>
 
-## Menjalankan tanpa backend (mode demo)
+---
 
-Buka `index.html` lewat server statis apa saja, misalnya:
+## 🚀 About APIS AI
+
+**APIS AI** is a modern AI chatbot website that uses the **Google Gemini API** as its intelligence engine.
+
+The project is built with a lightweight frontend and a secure serverless backend using **Vercel Functions**, making it fast, simple, and easy to deploy.
+
+---
+
+## ✨ Features
+
+- 💬 AI Chat Assistant
+- 🧠 Powered by Google Gemini API
+- 🖼️ Image understanding support
+- 📱 Responsive design (Mobile & Desktop)
+- ⚡ Fast serverless backend with Vercel
+- 🔒 Secure API Key using Environment Variables
+- 🎨 Modern chatbot interface
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+
+### Backend
+- Vercel Serverless Functions
+- Node.js
+
+### AI Model
+- Google Gemini API
+
+---
+
+## 📂 Project Structure
+
+```text
+Apis-AI/
+│
+├── api/
+│   └── chat.js          # Vercel Serverless Backend
+│
+├── assets/              # Images & Resources
+│
+├── css/                 # Stylesheet Files
+│
+├── js/                  # Frontend JavaScript
+│
+├── index.html           # Main Interface
+│
+├── package.json         # Dependencies
+│
+├── vercel.json          # Vercel Configuration
+│
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+Clone this repository:
 
 ```bash
-python3 -m http.server 8000
-# lalu buka http://localhost:8000
+git clone https://github.com/ApisAjh/Apis-AI.git
 ```
 
-Di mode ini, balasan AI memakai mesin demo bawaan (`generateAIReply()` di `js/chat.js`) dan data (akun, chat, tema) tersimpan di `localStorage` browser.
+Go into the project:
 
-## Menyambungkan ke Google Gemini 3.5 Flash (backend sungguhan)
-
-Backend memakai SDK resmi **`@google/genai`** dan model **`gemini-3.5-flash`**.
-
-1. Buat API key di **https://aistudio.google.com/apikey** (Google AI Studio).
-2. Masuk ke folder backend lalu pasang dependensinya:
-   ```bash
-   cd server
-   npm install
-   ```
-3. Salin file environment lalu isi API key kamu:
-   ```bash
-   cp .env.example .env
-   # buka .env, isi GEMINI_API_KEY=...
-   ```
-4. Jalankan server:
-   ```bash
-   npm start
-   ```
-5. Buka `http://localhost:3000` — server ini otomatis menyajikan frontend (`index.html`, dst.) **dan** endpoint `POST /api/chat`, jadi tidak perlu server statis terpisah.
-
-Setelah backend aktif, `js/chat.js` (lewat `js/api.js`) otomatis memakai balasan asli dari Gemini. Kalau backend mati atau error (API key salah, kuota habis, dsb.), aplikasi **otomatis kembali** ke mesin balasan demo supaya chat tetap bisa dipakai — muncul notifikasi kecil sekali saat itu terjadi.
-
-### Fitur backend
-
-- **Endpoint tetap sama:** `POST /api/chat` — request/response shape kompatibel dengan versi sebelumnya (`{ text, usage }`), jadi tidak ada perubahan pada frontend selain `js/api.js`.
-- **Chat history:** seluruh riwayat pesan di percakapan yang sedang dibuka dikirim sebagai `contents` bergaya Gemini (`role: "user"` / `"model"`), sehingga jawaban tetap mengikuti konteks obrolan.
-- **Streaming response:** kirim `{ messages, stream: true }` ke `/api/chat` untuk mendapatkan balasan Server-Sent Events (SSE) potongan demi potongan, bukan satu balasan utuh. Sudah diimplementasikan penuh di backend maupun sebagai fungsi siap pakai `ApisAPI.sendChatStream(messages, onDelta)` di `js/api.js` — belum disambungkan ke tampilan chat secara default supaya UI/alur frontend tidak berubah, tapi tinggal dipanggil kapan pun kamu mau menampilkan efek mengetik karakter-per-karakter.
-- **Image input (Vision):** saat pengguna mengirim gambar di chat, `js/api.js` mengirim data gambar (base64) ke backend, yang meneruskannya ke Gemini sebagai bagian `inlineData` — jadi Gemini benar-benar "melihat" gambarnya, bukan cuma tahu ada lampiran.
-
-### Struktur backend
-
-```
-server/
-├── server.js       → Express app: serve frontend + POST /api/chat (Gemini)
-├── package.json    → dependensi: @google/genai, express, dotenv
-└── .env.example    → salin ke .env, isi GEMINI_API_KEY kamu (jangan commit .env asli)
+```bash
+cd Apis-AI
 ```
 
-### Catatan keamanan
+Install dependencies:
 
-Jangan pernah memanggil Gemini API langsung dari kode di browser (`js/*.js`) dengan API key ditempel di situ — siapa pun yang membuka DevTools bisa mencuri key-mu. Selalu lewat backend seperti `server/server.js`, yang menyimpan key di `.env` (server-side, tidak terkirim ke browser).
+```bash
+npm install
+```
 
-### Menghubungkan database sungguhan (opsional, langkah lanjutan)
+---
 
-Saat ini akun & riwayat chat memakai `localStorage` (lihat `js/db.js`). Untuk sinkronisasi antar perangkat, ganti isi fungsi-fungsi di `js/db.js` agar memanggil Firebase Firestore / Supabase / API backend-mu sendiri — struktur fungsinya (createUser, getChats, addMessage, dst.) sudah dirancang supaya penggantian ini tidak memengaruhi bagian lain dari aplikasi.
+## 🔑 Environment Setup
+
+Create a file:
+
+```text
+.env.local
+```
+
+Add your Gemini API Key:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+---
+
+## ▶️ Run Locally
+
+Start Vercel development server:
+
+```bash
+vercel dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## ☁️ Deployment
+
+APIS AI is deployed using:
+
+- Vercel Hosting
+- Vercel Serverless Functions
+- Google Gemini API
+
+Every update pushed to the main branch will automatically trigger a new deployment.
+
+---
+
+## 📸 Preview
+
+Add your APIS AI screenshots here.
+
+---
+
+## 🧑‍💻 Developer
+
+Created by **Apis**
+
+GitHub:
+https://github.com/ApisAjh
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
