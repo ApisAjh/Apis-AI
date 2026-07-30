@@ -53,7 +53,7 @@ APIS AI is designed to provide a fast, responsive, and simple AI assistant exper
 ### AI
 
 - Google Gemini API
-- Gemini 2.5 Flash Model
+- Gemini 3.5 Flash Model
 
 ---
 
