@@ -18,18 +18,19 @@
    Optional:
      GEMINI_MODEL     defaults to "gemini-3.5-flash"
      ALLOWED_ORIGIN   defaults to "*"
+     SUPABASE_URL       Supabase project URL, for the managed
+     SUPABASE_ANON_KEY  system prompt (see api/_lib/systemPrompt.js).
+                         If unset, a safe built-in fallback prompt
+                         is used instead — this route never crashes
+                         because Supabase is unavailable.
    ========================================================= */
 
 const { GoogleGenAI } = require('@google/genai');
+const { getActiveSystemPrompt } = require('./_lib/systemPrompt');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
-
-const SYSTEM_PROMPT = `Kamu adalah Apis AI, asisten AI yang ramah, jelas, dan membantu di dalam aplikasi chat bernama "Apis AI" (Development by Apis).
-Jawab dalam Bahasa Indonesia kecuali pengguna menulis dalam bahasa lain.
-Gunakan format markdown ringan (heading, list, code block, tabel) bila relevan agar mudah dibaca di dalam bubble chat.
-Jika pengguna mengirim gambar, amati isinya dan jawab sesuai konteks gambar tersebut.`;
 
 // Reused across invocations within the same warm Lambda instance.
 const ai = GEMINI_API_KEY ? new GoogleGenAI({ apiKey: GEMINI_API_KEY }) : null;
@@ -103,10 +104,15 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Tidak ada konten valid (teks/gambar) pada pesan.' });
   }
 
+  // system prompt is managed in Supabase (table `system_prompts`);
+  // getActiveSystemPrompt() falls back to a safe built-in prompt if
+  // Supabase is not configured or unreachable, so this never crashes.
+  const systemPrompt = await getActiveSystemPrompt();
+
   const requestConfig = {
     model: GEMINI_MODEL,
     contents,
-    config: { systemInstruction: SYSTEM_PROMPT, maxOutputTokens: 1024 },
+    config: { systemInstruction: systemPrompt, maxOutputTokens: 1024 },
   };
 
   // ---------- Streaming mode (Server-Sent Events) ----------
