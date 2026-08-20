@@ -66,7 +66,23 @@
   .msg-col{ max-width:88%; }
 }
 
-/* Respect reduced motion */
+/* ---------------------------------------------------------
+   Respect reduced motion — EXCEPT for in-progress loading
+   indicators (typing dots, skeleton shimmer).
+
+   BUGFIX: this used to apply to every element with no
+   exception. Because it forces `animation-iteration-count: 1`
+   with a near-zero duration, an *infinite* animation like the
+   typing dots' bounce would play its single 1ms iteration and
+   then simply stop, frozen mid-frame — it looked exactly like
+   a stuck/broken loading indicator, not like "no motion". Any
+   machine with "reduce motion" turned on at the OS level (a
+   fairly common desktop/corporate accessibility default, far
+   less common on personal phones) hit this on every AI reply.
+   Decorative animations still honor reduced-motion below; only
+   the two loading indicators get a calmer opacity-only pulse
+   instead of being frozen, so they stay visibly alive.
+   --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
     animation-duration: 0.001ms !important;
@@ -74,6 +90,14 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
+  .typing-dots span, .skel{
+    animation-duration: 1.4s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .typing-dots span{ animation-name: typingPulseReduced !important; transform:none !important; }
+
+  @keyframes typingPulseReduced{ 0%,100%{ opacity:0.35; } 50%{ opacity:1; } }
 }
 
 /* Focus visibility for accessibility */
