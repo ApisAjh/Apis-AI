@@ -74,19 +74,61 @@ const ApisDB = (() => {
   }
 
   // ---------------- Session ----------------
+  // "Ingat saya" dicentang  -> sesi bertahan sampai REMEMBER_MAX_AGE_MS
+  //                            (persist lintas restart browser).
+  // "Ingat saya" tidak dicentang -> sesi hanya bertahan selama tab/
+  //                            browser masih terbuka (ditandai lewat
+  //                            sessionStorage, yang otomatis hilang
+  //                            saat browser ditutup) DAN tidak lebih
+  //                            dari SESSION_MAX_AGE_MS.
+  const REMEMBER_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 hari
+  const SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000; // 12 jam
+
   function setSession(email, remember) {
-    const payload = { email, ts: Date.now() };
+    const payload = { email, ts: Date.now(), remember: Boolean(remember) };
     write(KEYS.session, payload);
     if (!remember) sessionStorage.setItem('apis_session_temp', '1');
     else sessionStorage.removeItem('apis_session_temp');
   }
+
+  /**
+   * Returns the raw session payload only if it is still valid:
+   * the record exists, has not expired, and (for non-"remember"
+   * sessions) the browser/tab hasn't been restarted since login.
+   * Invalid/expired sessions are cleared as a side effect so
+   * stale data never lingers in storage.
+   */
   function getSession() {
-    return read(KEYS.session, null);
+    const session = read(KEYS.session, null);
+    if (!session) return null;
+
+    // Sessions created before this update have no `remember` field —
+    // treat those as remember=true (the previous default behavior)
+    // so upgrading the app doesn't silently log everyone out.
+    const remember = session.remember !== false;
+    const age = Date.now() - (session.ts || 0);
+    const maxAge = remember ? REMEMBER_MAX_AGE_MS : SESSION_MAX_AGE_MS;
+    const expired = !Number.isFinite(session.ts) || age > maxAge;
+    const browserRestarted = !remember && !sessionStorage.getItem('apis_session_temp');
+
+    if (expired || browserRestarted) {
+      clearSession();
+      return null;
+    }
+    return session;
   }
+
   function clearSession() {
     localStorage.removeItem(KEYS.session);
     sessionStorage.removeItem('apis_session_temp');
   }
+
+  /** True only when there is a valid session AND the user it points to still exists. */
+  function isSessionValid() {
+    const session = getSession();
+    return Boolean(session && findUser(session.email));
+  }
+
   function currentUser() {
     const s = getSession();
     if (!s) return null;
@@ -166,7 +208,7 @@ const ApisDB = (() => {
 
   return {
     createUser, findUser, updateUser,
-    setSession, getSession, clearSession, currentUser,
+    setSession, getSession, clearSession, currentUser, isSessionValid,
     getChats, saveChats, createChat, updateChat, deleteChat,
     addMessage, updateMessage, deleteMessage, deleteAllChats,
     getSettings, saveSettings,

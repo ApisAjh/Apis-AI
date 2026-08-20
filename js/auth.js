@@ -8,16 +8,21 @@
    the same.
    ========================================================= */
 
+/**
+ * Guards the main app page. The real check already ran inline in
+ * <head> (see the session-guard script in index.html) before any
+ * app content painted; this call is the same check run again after
+ * scripts load, in case the session expired/logged out in another
+ * tab between that early check and now.
+ */
 function guardDashboard() {
-  const session = ApisDB.getSession();
-  if (!session || !ApisDB.findUser(session.email)) {
+  if (!ApisDB.isSessionValid()) {
     window.location.href = 'login.html';
   }
 }
 
 function redirectIfLoggedIn() {
-  const session = ApisDB.getSession();
-  if (session && ApisDB.findUser(session.email)) {
+  if (ApisDB.isSessionValid()) {
     window.location.href = 'index.html';
   }
 }

@@ -11,6 +11,12 @@
 const ApisChat = (() => {
   let currentChatId = null;
   let pendingAttachments = []; // {type:'image'|'file', data, name, size, mime}
+  // Tracks the setTimeout id(s) used to reveal an AI reply after the
+  // typing indicator, so they can all be cancelled together instead of
+  // piling up (e.g. if several messages are sent back-to-back) or
+  // leaking after the user navigates away mid-request. See
+  // scheduleReplyReveal()/cleanupPendingReplyTimers() below.
+  const pendingReplyTimers = new Set();
 
   const EXAMPLE_PROMPTS = [
     { icon: 'brain', text: 'Jelaskan Artificial Intelligence' },
@@ -367,7 +373,7 @@ const ApisChat = (() => {
     // Keep the typing indicator visible a bit longer for the demo engine so it
     // doesn't feel instant/robotic; real backend replies show as soon as they arrive.
     const extraDelay = usedBackend ? 0 : 500 + Math.min(1200, replyText.length * 6);
-    setTimeout(() => {
+    scheduleReplyReveal(extraDelay, () => {
       hideTyping();
       const aiMsg = { id: 'm_' + Date.now() + Math.random().toString(36).slice(2, 6), role: 'ai', type: 'text', text: replyText, timestamp: new Date().toISOString() };
       ApisDB.addMessage(email, chatId, aiMsg);
@@ -376,12 +382,35 @@ const ApisChat = (() => {
         if (list) { list.appendChild(buildMessageNode(aiMsg)); scrollToBottom(); }
       }
       ApisSidebar.render();
-    }, extraDelay);
+    });
+  }
+
+  /**
+   * setTimeout wrapper used to reveal a finished AI reply. Registers
+   * the timer id in `pendingReplyTimers` and removes it again once it
+   * fires, so cleanupPendingReplyTimers() always has an accurate list
+   * of outstanding timers to cancel (e.g. several messages sent in a
+   * row, or the user navigating away before a reply lands).
+   */
+  function scheduleReplyReveal(delay, fn) {
+    const id = setTimeout(() => {
+      pendingReplyTimers.delete(id);
+      fn();
+    }, delay);
+    pendingReplyTimers.add(id);
+    return id;
+  }
+
+  /** Cancels every outstanding "reveal AI reply" timer without running them. */
+  function cleanupPendingReplyTimers() {
+    pendingReplyTimers.forEach((id) => clearTimeout(id));
+    pendingReplyTimers.clear();
   }
 
   function showTyping() {
     const list = document.getElementById('messages-list');
     if (!list) return;
+    hideTyping(); // never stack more than one typing indicator at once
     const row = document.createElement('div');
     row.className = 'msg-row ai';
     row.id = 'typing-row';
@@ -584,6 +613,11 @@ const ApisChat = (() => {
     });
 
     document.getElementById('confirm-ok-btn')?.addEventListener('click', handleConfirmedDelete);
+
+    // Cleanup: cancel any pending "reveal AI reply" timers if the user
+    // leaves/closes the page mid-request, instead of leaking them.
+    window.addEventListener('pagehide', cleanupPendingReplyTimers);
+    window.addEventListener('beforeunload', cleanupPendingReplyTimers);
   }
 
   function sendVoiceMessage(audioData, duration) {

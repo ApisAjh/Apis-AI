@@ -72,11 +72,28 @@ const ApisAPI = (() => {
     const history = toApiHistory(messages);
     if (history.length === 0) throw new Error('Tidak ada pesan untuk dikirim.');
 
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: history }),
-    });
+    // BUGFIX: fetch() never times out on its own — if the backend hangs
+    // instead of erroring, this await would never settle and the typing
+    // indicator in chat.js (which waits on this promise) would stay
+    // stuck forever. A hard timeout guarantees this always resolves or
+    // rejects, so chat.js can always fall back and hide the indicator.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
+    let res;
+    try {
+      res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
+        signal: controller.signal,
+      });
+    } catch (err) {
+      if (err.name === 'AbortError') throw new Error('Waktu tunggu backend habis (30 detik).');
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
 
     let data;
     try {
